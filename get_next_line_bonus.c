@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jichompo <jichompo@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 19:23:51 by jichompo          #+#    #+#             */
-/*   Updated: 2024/02/17 23:28:13 by jichompo         ###   ########.fr       */
+/*   Updated: 2024/02/18 08:25:04 by jichompo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	*ft_find_newline(int fd, char *file_read)
 	return (file_read);
 }
 
-
 char	*ft_remove_remain(char *file_read)
 {
 	char	*result;
@@ -86,11 +85,11 @@ char	*ft_get_remain(char *file_read)
 	{
 		free(file_read);
 		return ((void *)0);
-	} 
+	}
 	result = ft_calloc(sizeof(char), ft_strlen(file_read) - index + 1);
 	index++;
 	result_index = 0;
-	while(file_read[index])
+	while (file_read[index])
 	{
 		result[result_index] = file_read[index];
 		index++;
@@ -102,15 +101,15 @@ char	*ft_get_remain(char *file_read)
 
 char	*get_next_line(int fd)
 {
-	static char	*file_read;
+	static char	*file_read[20];
 	char		*current_line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return ((void *)0);
-	file_read = ft_find_newline(fd, file_read);
-	if (!file_read)
+	file_read[fd] = ft_find_newline(fd, file_read[fd]);
+	if (!file_read[fd])
 		return ((void *)0);
-	current_line = ft_remove_remain(file_read);
-	file_read = ft_get_remain(file_read);
+	current_line = ft_remove_remain(file_read[fd]);
+	file_read[fd] = ft_get_remain(file_read[fd]);
 	return (current_line);
 }

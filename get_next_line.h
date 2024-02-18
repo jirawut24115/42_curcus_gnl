@@ -6,7 +6,7 @@
 /*   By: jichompo <jichompo@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 19:25:23 by jichompo          #+#    #+#             */
-/*   Updated: 2024/02/18 00:06:28 by jchompoo         ###   ########.fr       */
+/*   Updated: 2024/02/18 08:33:35 by jichompo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,11 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-
-#include <stdio.h>
-
 void	*ft_calloc(int count, int size);
 char	*ft_strchr(const char *s, int c);
-int	ft_strlen(char *s);
 char	*ft_strjoin(char *s1, char *s2);
 char	*get_next_line(int fd);
 char	*ft_strdup(char *str);
+int		ft_strlen(char *s);
+
 #endif

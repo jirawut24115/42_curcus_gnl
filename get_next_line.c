@@ -6,7 +6,7 @@
 /*   By: jichompo <jichompo@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 19:23:51 by jichompo          #+#    #+#             */
-/*   Updated: 2024/02/17 23:28:13 by jichompo         ###   ########.fr       */
+/*   Updated: 2024/02/18 08:34:44 by jichompo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ char	*ft_find_newline(int fd, char *file_read)
 	return (file_read);
 }
 
-
 char	*ft_remove_remain(char *file_read)
 {
 	char	*result;
@@ -86,11 +85,11 @@ char	*ft_get_remain(char *file_read)
 	{
 		free(file_read);
 		return ((void *)0);
-	} 
+	}
 	result = ft_calloc(sizeof(char), ft_strlen(file_read) - index + 1);
 	index++;
 	result_index = 0;
-	while(file_read[index])
+	while (file_read[index])
 	{
 		result[result_index] = file_read[index];
 		index++;
