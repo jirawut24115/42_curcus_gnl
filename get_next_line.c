@@ -6,7 +6,7 @@
 /*   By: jichompo <jichompo@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 19:23:51 by jichompo          #+#    #+#             */
-/*   Updated: 2024/02/18 08:34:44 by jichompo         ###   ########.fr       */
+/*   Updated: 2024/03/14 11:41:21 by jichompo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,14 @@ char	*ft_find_newline(int fd, char *file_read)
 	if (!file_read)
 		file_read = ft_calloc(1, sizeof(char));
 	buff = ft_calloc(sizeof(char), BUFFER_SIZE + 1);
+	if (!buff)
+		return (free(file_read), ((void *)0));
 	num_read = 1;
 	while (num_read > 0)
 	{
 		num_read = read(fd, buff, BUFFER_SIZE);
 		if (num_read == -1)
-		{
-			free(buff);
-			return ((void *)0);
-		}
+			return (free(buff), free(file_read), ((void *)0));
 		buff[num_read] = '\0';
 		file_read = ft_free_strjoin(file_read, buff);
 		if (ft_strchr(buff, '\n'))
@@ -58,6 +57,8 @@ char	*ft_remove_remain(char *file_read)
 	while (file_read[index] && file_read[index] != '\n')
 		index++;
 	result = ft_calloc(index + 2, sizeof(char));
+	if (!result)
+		return ((void *)0);
 	index = 0;
 	while (file_read[index] && file_read[index] != '\n')
 	{
@@ -82,11 +83,10 @@ char	*ft_get_remain(char *file_read)
 	while (file_read[index] && file_read[index] != '\n')
 		index++;
 	if (!file_read[index])
-	{
-		free(file_read);
-		return ((void *)0);
-	}
+		return (free(file_read), ((void *)0));
 	result = ft_calloc(sizeof(char), ft_strlen(file_read) - index + 1);
+	if (!result)
+		return (free(file_read), ((void *)0));
 	index++;
 	result_index = 0;
 	while (file_read[index])
@@ -104,7 +104,7 @@ char	*get_next_line(int fd)
 	static char	*file_read;
 	char		*current_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+	if (fd < 0 || BUFFER_SIZE <= 0)
 		return ((void *)0);
 	file_read = ft_find_newline(fd, file_read);
 	if (!file_read)
