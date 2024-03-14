@@ -6,7 +6,7 @@
 /*   By: jichompo <jichompo@>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/17 19:23:51 by jichompo          #+#    #+#             */
-/*   Updated: 2024/03/14 11:48:51 by jichompo         ###   ########.fr       */
+/*   Updated: 2024/03/14 16:02:06 by jichompo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ char	*ft_find_newline(int fd, char *file_read)
 	while (num_read > 0)
 	{
 		num_read = read(fd, buff, BUFFER_SIZE);
+		if (num_read == 0)
+			break ;
 		if (num_read == -1)
 			return (free(buff), free(file_read), ((void *)0));
 		buff[num_read] = '\0';
@@ -101,10 +103,10 @@ char	*ft_get_remain(char *file_read)
 
 char	*get_next_line(int fd)
 {
-	static char	*file_read[20];
+	static char	*file_read[1000];
 	char		*current_line;
 
-	if (fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd >= 100)
 		return ((void *)0);
 	file_read[fd] = ft_find_newline(fd, file_read[fd]);
 	if (!file_read[fd])
